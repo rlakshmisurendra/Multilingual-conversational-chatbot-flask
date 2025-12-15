@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniLingo Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    
+    body { 
+      font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+      background-color: #f5f7fb; 
+      color: #1f2937;
+    }
+    
+    .header { 
+      background: white; 
+      border-bottom: 1px solid #e5e7eb;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    }
+    
+    .logo-badge img {
+      width: 32px;
+      height: 32px;
+    }
+    
+    .header-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+    }
+    
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .user-email {
+      font-size: 14px;
+      color: #6b7280;
+      font-weight: 500;
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid #e6e8f0;
+      background: #fff;
+      color: #1f2937;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    
+    .btn:hover {
+      background: #f9fafb;
+      border-color: #5B6BFF;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 24px auto;
+      padding: 0 24px;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    
+    .stat-card {
+      background: white;
+      border: 1px solid #e6e8f0;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.03);
+      transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+      box-shadow: 0 12px 24px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.05);
+      transform: translateY(-3px);
+    }
+    
+    .stat-label {
+      font-size: 13px;
+      color: #6b7280;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .stat-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    
+    .table-card {
+      background: white;
+      border: 1px solid #e6e8f0;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.03);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .table-card:hover {
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.05);
+    }
+    
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    
+    .table-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+    
+    .search-box {
+      padding: 8px 14px;
+      border: 1px solid #e6e8f0;
+      border-radius: 8px;
+      font-size: 14px;
+      width: 250px;
+      background: #f9fafb;
+    }
+    
+    .search-box:focus {
+      outline: none;
+      border-color: #5B6BFF;
+      background: white;
+    }
+    
+    .table-wrapper {
+      overflow-x: auto;
+    }
+    
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+    }
+    
+    th { 
+      background: #f9fafb;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6b7280;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 2px solid #e6e8f0;
+    }
+    
+    td { 
+      padding: 14px 16px;
+      border-bottom: 1px solid #f3f4f6;
+      font-size: 14px;
+      color: #374151;
+      transition: background-color 0.2s ease;
+      border-radius: 6px;
+    }
+    
+    tbody tr {
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    tbody tr:hover {
+      background-color: #f0f4ff;
+      box-shadow: inset 0 0 8px rgba(102, 126, 234, 0.1);
+    }
+    
+    tbody tr:hover td {
+      background: transparent;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: #eef2ff;
+      color: #5B6BFF;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: #9ca3af;
+    }
+    
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 1px solid #e6e8f0;
+      background: #fff;
+      color: #1f2937;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    
+    .back-link:hover {
+      background: #f9fafb;
+      border-color: #667eea;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+      transform: translateY(-1px);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 0;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 500px;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-header {
+      padding: 24px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #6b7280;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .modal-close:hover {
+      color: #1f2937;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-row {
+      margin-bottom: 20px;
+    }
+
+    .modal-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #6b7280;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .modal-value {
+      font-size: 14px;
+      color: #1f2937;
+      word-break: break-all;
+    }
+    
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .table-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      
+      .search-box {
+        width: 100%;
+      }
+      
+      .modal-content {
+        width: 95%;
+        margin: 20% auto;
+      }
+    }
+  </style>
+  <script type="module" src="/static/firebase-init.js"></script>
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js';
+    import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js';
+
+    const app = initializeApp(window.firebaseConfig);
+    const auth = getAuth(app);
+
+    let idToken = null;
+    let allUsers = [];
+
+    async function fetchAdminData() {
+      const res = await fetch('/api/admin-data', {
+        headers: { 'Authorization': 'Bearer ' + idToken }
+      });
+      if (res.status === 403) {
+        alert('You are not an admin. Redirecting.');
+        window.location.href = '/';
+        return;
+      }
+      if (!res.ok) {
+        document.getElementById('content').innerHTML = `<p class="empty-state">Error loading data.</p>`;
+        return;
+      }
+      const data = await res.json();
+      allUsers = data.users || [];
+      render(data);
+    }
+
+    function render({ users, total_users, total_messages, total_time_min }) {
+      document.getElementById('total-users').textContent = total_users;
+      document.getElementById('total-messages').textContent = total_messages;
+      document.getElementById('total-time').textContent = total_time_min;
+      
+      renderTable(users);
+    }
+
+    function renderTable(users) {
+      const tbody = document.getElementById('tbody');
+      tbody.innerHTML = '';
+      
+      if (!users || users.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No users found</td></tr>';
+        return;
+      }
+      
+      for (const u of users) {
+        const tr = document.createElement('tr');
+        const createdDate = u.created_at ? new Date(u.created_at).toLocaleDateString() : '-';
+        const lastLoginDate = u.last_login_at ? new Date(u.last_login_at).toLocaleDateString() : '-';
+        
+        tr.innerHTML = `
+          <td><strong>${u.name || 'Unknown'}</strong></td>
+          <td>${u.email || '-'}</td>
+        `;
+        tr.onclick = () => showUserModal(u);
+        tbody.appendChild(tr);
+      }
+    }
+
+    function searchUsers(query) {
+      const filtered = allUsers.filter(u => {
+        const searchText = query.toLowerCase();
+        return (u.name || '').toLowerCase().includes(searchText) ||
+               (u.email || '').toLowerCase().includes(searchText) ||
+               (u.uid || '').toLowerCase().includes(searchText);
+      });
+      renderTable(filtered);
+    }
+
+    function showUserModal(user) {
+      const modal = document.getElementById('userModal');
+      document.getElementById('modalName').textContent = user.name || 'Unknown';
+      document.getElementById('modalEmail').textContent = user.email || '-';
+      document.getElementById('modalUID').textContent = user.uid || '-';
+      document.getElementById('modalCreated').textContent = user.created_at ? new Date(user.created_at).toLocaleString() : '-';
+      document.getElementById('modalLastLogin').textContent = user.last_login_at ? new Date(user.last_login_at).toLocaleString() : '-';
+      
+      // Total metrics from date created
+      document.getElementById('modalTotalMessages').textContent = user.total_messages || '0';
+      document.getElementById('modalTotalSessionTime').textContent = Math.floor((user.total_session_seconds || 0) / 60) + ' min';
+      
+      // Last session metrics
+      document.getElementById('modalLastMessages').textContent = user.last_session_messages || '0';
+      document.getElementById('modalLastSessionTime').textContent = Math.floor((user.last_session_seconds || 0) / 60) + ' min';
+      
+      modal.style.display = 'block';
+    }
+
+    function closeUserModal() {
+      document.getElementById('userModal').style.display = 'none';
+    }
+
+    window.closeUserModal = closeUserModal;
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('userModal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = '/login';
+        return;
+      }
+      idToken = await user.getIdToken();
+      await fetchAdminData();
+      document.getElementById('whoami').textContent = user.email || user.uid;
+      document.getElementById('logout').style.display = 'inline-block';
+    });
+
+    window.doLogout = async function () {
+      await signOut(auth);
+      window.location.href = '/';
+    }
+    
+    window.handleSearch = function(e) {
+      searchUsers(e.target.value);
+    }
+  </script>
+</head>
+<body>
+  <div class="header">
+    <div class="header-left">
+      <div class="logo-badge">
+        <img src="/static/unilingo-logo.svg" alt="UniLingo logo" />
+        <span class="header-title">UniLingo Admin</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <span id="whoami" class="user-email">Not signed in</span>
+      <button id="logout" class="btn btn-primary" style="display:none" onclick="doLogout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <a href="/chat" class="back-link">
+      ← Back to Chat
+    </a>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-label">Total Users</div>
+        <div class="stat-value" id="total-users">0</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon">💬</div>
+        <div class="stat-label">Total Messages</div>
+        <div class="stat-value" id="total-messages">0</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon">⏱️</div>
+        <div class="stat-label">Total Time (min)</div>
+        <div class="stat-value" id="total-time">0</div>
+      </div>
+    </div>
+
+    <div class="table-card" id="content">
+      <div class="table-header">
+        <h2 class="table-title">User Activity</h2>
+        <input 
+          type="text" 
+          class="search-box" 
+          placeholder="Search users..." 
+          oninput="handleSearch(event)"
+        />
+      </div>
+      
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td colspan="2" class="empty-state">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- User Detail Modal -->
+    <div id="userModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">User Details</h2>
+          <button type="button" class="modal-close" onclick="window.closeUserModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-row">
+            <div class="modal-label">Name</div>
+            <div class="modal-value" id="modalName">-</div>
+          </div>
+          <div class="modal-row">
+            <div class="modal-label">Email</div>
+            <div class="modal-value" id="modalEmail">-</div>
+          </div>
+          <div class="modal-row">
+            <div class="modal-label">User ID</div>
+            <div class="modal-value" id="modalUID">-</div>
+          </div>
+          <div class="modal-row">
+            <div class="modal-label">Account Created</div>
+            <div class="modal-value" id="modalCreated">-</div>
+          </div>
+          <div class="modal-row">
+            <div class="modal-label">Last Login</div>
+            <div class="modal-value" id="modalLastLogin">-</div>
+          </div>
+
+          <!-- Total Metrics from Date Created -->
+          <hr style="margin: 16px 0; border: none; border-top: 1px solid #e5e7eb;">
+          
+          <div class="modal-row">
+            <div class="modal-label">📊 Total Messages (All-Time)</div>
+            <div class="modal-value" id="modalTotalMessages">-</div>
+          </div>
+          <div class="modal-row">
+            <div class="modal-label">⏱️ Total Session Time (All-Time)</div>
+            <div class="modal-value" id="modalTotalSessionTime">-</div>
+          </div>
+
+          <!-- Last Session Metrics -->
+          <hr style="margin: 16px 0; border: none; border-top: 1px solid #e5e7eb;">
+          
+          <div class="modal-row">
+            <div class="modal-label">💬 Last Session Messages</div>
+            <div class="modal-value" id="modalLastMessages">-</div>
+          </div>
+          <div class="modal-row">
+            <div class="modal-label">🕐 Last Session Time</div>
+            <div class="modal-value" id="modalLastSessionTime">-</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,5 @@
+Flask
+langdetect
+google-generativeai
+firebase-admin
+python-dotenv

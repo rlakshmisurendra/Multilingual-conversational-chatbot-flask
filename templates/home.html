@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UniLingo - Multilingual Conversational Chatbot</title>
+  <link rel="icon" type="image/svg+xml" href="/static/unilingo-logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Space Grotesk', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background:
+        linear-gradient(135deg, rgba(102,126,234,0.78) 0%, rgba(118,75,162,0.88) 100%),
+        url('/static/college-campus.jpg') center/cover no-repeat fixed;
+      color: #1a202c;
+    }
+
+    /* Top Banner */
+    .top-banner {
+      background: #fff;
+      border-bottom: 3px solid #e2e8f0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .top-banner img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Navigation */
+    .nav {
+      background: rgba(255,255,255,0.98);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 20px;
+      color: #1a202c;
+    }
+    .nav-brand img { width: 32px; height: 32px; }
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: #4a5568;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover { background: #edf2f7; color: #2d3748; }
+    .nav-links .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 999px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .nav-links .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+    .btn-primary {
+      background: linear-gradient(120deg, #2d7a4a, #1a5f38);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 999px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(45,122,74,0.4); }
+
+    /* Hero Section */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 24px;
+      text-align: center;
+      color: white;
+    }
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      line-height: 1.1;
+      letter-spacing: -1px;
+    }
+    .hero .subtitle {
+      font-size: 22px;
+      margin-bottom: 32px;
+      color: rgba(255,255,255,0.9);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+    .hero .description {
+      font-size: 16px;
+      margin-bottom: 40px;
+      color: rgba(255,255,255,0.85);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn-large {
+      padding: 16px 40px;
+      font-size: 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-large.btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+    }
+    .btn-large.btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+    .btn-white {
+      background: white;
+      color: #2d7a4a;
+      border: 2px solid white;
+    }
+    .btn-white:hover { background: transparent; color: white; transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+    .btn-outline:hover { 
+      background: rgba(102, 126, 234, 0.2);
+      border-color: white;
+      transform: translateY(-2px);
+    }
+    .btn-large.btn-outline {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+    .btn-large.btn-outline:hover {
+      background: rgba(102, 126, 234, 0.3);
+      border-color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    /* Developed By Section */
+    .developed-by {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 48px auto 0;
+      max-width: 700px;
+      color: white;
+    }
+    .developed-by h3 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+    .authors {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.2);
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    /* Features Section */
+    .features {
+      background: white;
+      padding: 80px 24px;
+    }
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #1a5f38;
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    }
+    .section-subtitle {
+      text-align: center;
+      font-size: 18px;
+      color: #718096;
+      margin-bottom: 48px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+    }
+    .feature-card {
+      background: #f7fafc;
+      padding: 32px;
+      border-radius: 16px;
+      border: 2px solid #e2e8f0;
+      transition: all 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(45,122,74,0.2);
+      border-color: #2d7a4a;
+    }
+    .feature-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    .feature-card h3 {
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: #2d3748;
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    }
+    .feature-card p {
+      color: #4a5568;
+      line-height: 1.6;
+    }
+
+    /* Languages Section */
+    .languages {
+      background:
+        linear-gradient(135deg, rgba(102,126,234,0.85) 0%, rgba(118,75,162,0.92) 100%),
+        url('/static/college-campus.jpg') top/cover no-repeat;
+      padding: 80px 24px;
+      color: white;
+    }
+    .languages-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .lang-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .lang-item {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s;
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+    .lang-item:hover {
+      background: rgba(255,255,255,0.25);
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.5);
+    }
+
+    /* Footer */
+    .footer {
+      background: #1a202c;
+      color: white;
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer p {
+      margin-bottom: 12px;
+      color: #cbd5e1;
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+    .footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: white; }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 36px; }
+      .hero .subtitle { font-size: 18px; }
+      .section-title { font-size: 32px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .lang-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Banner -->
+  <div class="top-banner">
+    <img src="/static/college-banner.jpg" alt="St. Ann's College Banner" />
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-brand">
+      <img src="/static/unilingo-logo.svg" alt="UniLingo logo" />
+      <span>UniLingo</span>
+    </div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#languages">Languages</a>
+      <a href="/login">Login</a>
+      <a href="/signup" class="btn-primary">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Multilingual Conversational Chatbot</h1>
+    <p class="subtitle">
+      Smart AI system that supports many Indian & global languages
+    </p>
+    <p class="description">
+      UniLingo is an advanced multilingual conversational AI chatbot powered by Google's Gemini AI. 
+      It automatically detects your input language and responds in the same language, providing 
+      clear, concise, and contextually relevant answers. Whether you're asking questions in English, 
+      Hindi, Telugu, Tamil, or any other supported language, UniLingo adapts seamlessly to deliver 
+      an intelligent conversational experience.
+    </p>
+    <div class="hero-buttons">
+      <a href="/signup" class="btn-large btn-outline">Get Started</a>
+      <a href="#features" class="btn-large btn-outline">Learn More</a>
+    </div>
+
+    <!-- Developed By Section -->
+    <div class="developed-by">
+      <h3>Developed By</h3>
+      <div class="authors">
+        <div class="author">
+          <span>👨‍💻</span>
+          <span>R. L. Surendra</span>
+        </div>
+        <div class="author">
+          <span>👨‍💻</span>
+          <span>T. V. Deepak</span>
+        </div>
+        <div class="author">
+          <span>👨‍💻</span>
+          <span>CH. Veerendra</span>
+        </div>
+      </div>
+      <div style="margin-top:16px; display:flex; flex-direction:column; gap:8px; align-items:center;">
+        <div class="author" style="background:rgba(255,255,255,0.25);">
+          <span>🎓</span>
+          <span>Department of CSE - AIML</span>
+        </div>
+        <div class="author" style="background:rgba(255,255,255,0.25);">
+          <span>🏫</span>
+          <span>St. Ann's College of Engineering & Technology</span>
+        </div>
+      </div>
+      <p style="margin-top:16px; font-size:14px; opacity:0.85;">
+        A project in AI/ML demonstrating real-world applications of Natural Language Processing 
+        and multilingual conversation systems using state-of-the-art generative AI models.
+      </p>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="features-container">
+      <h2 class="section-title">Powerful Features</h2>
+      <p class="section-subtitle">Everything you need for multilingual AI conversations</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🌍</div>
+          <h3>Automatic Language Detection</h3>
+          <p>
+            UniLingo automatically detects the language you're using and responds in the same language. 
+            No manual selection needed—just type naturally.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🧠</div>
+          <h3>Powered by Gemini AI</h3>
+          <p>
+            Built on Google's advanced Gemini 2.5 Flash model, providing intelligent, context-aware 
+            responses with state-of-the-art natural language understanding.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h3>Natural Conversations</h3>
+          <p>
+            Experience fluid, natural conversations. UniLingo maintains context throughout your chat 
+            session for more coherent and relevant responses.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔐</div>
+          <h3>Secure Authentication</h3>
+          <p>
+            Firebase Authentication ensures your data is protected. Sign in with Google or email/password 
+            with enterprise-grade security.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Usage Analytics</h3>
+          <p>
+            Track your conversation history, session times, and message counts. Admin dashboard provides 
+            insights into user engagement and system performance.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Fast & Responsive</h3>
+          <p>
+            Built with Flask and optimized for speed. Get instant responses with minimal latency, 
+            ensuring a smooth conversational experience.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Languages Section -->
+  <section class="languages" id="languages">
+    <div class="languages-container">
+      <h2 class="section-title" style="color:white;">Supported Languages</h2>
+      <p class="section-subtitle" style="color:rgba(255,255,255,0.85);">
+        Communicate in your preferred language—UniLingo supports multiple Indian and global languages
+      </p>
+      <div class="lang-grid">
+        <div class="lang-item">English</div>
+        <div class="lang-item">Hindi</div>
+        <div class="lang-item">Telugu</div>
+        <div class="lang-item">Tamil</div>
+        <div class="lang-item">Kannada</div>
+        <div class="lang-item">Malayalam</div>
+        <div class="lang-item">Marathi</div>
+        <div class="lang-item">Gujarati</div>
+        <div class="lang-item">Bengali</div>
+        <div class="lang-item">Urdu</div>
+        <div class="lang-item">Spanish</div>
+        <div class="lang-item">French</div>
+      </div>
+      <p style="text-align:center; margin-top:32px; font-size:18px; color:rgba(255,255,255,0.9);">
+        ...and many more languages
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <img src="/static/unilingo-logo.svg" alt="UniLingo logo" style="width:40px;height:40px;margin:0 auto 16px;" />
+      <p><strong>UniLingo</strong> - Multilingual Conversational Chatbot</p>
+      <p>Developed by R. L. Surendra, T. V. Deepak, CH. Veerendra</p>
+      <p>Department of CSE - AIML</p>
+      <p>St. Ann's College of Engineering & Technology</p>
+      <p style="margin-top:24px;font-size:14px;">
+        © 2025 UniLingo. All rights reserved. | Powered by Google Gemini AI & Firebase
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
